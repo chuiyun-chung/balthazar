@@ -1,4 +1,19 @@
 from src.memory import Memory
+from src.tools import simulate_tool_response
+
+def interpret_intent(user_input):
+    user_input = user_input.lower()
+
+    if "hello" in user_input or "hi" in user_input:
+        return "greeting"
+    elif "help" in user_input:
+        return "help"
+    elif user_input.startswith("search"):
+        return "search"
+    elif user_input.startswith("calculate"):
+        return "calculate"
+    else:
+        return "unknown"
 
 def main():
     memory = Memory()
@@ -10,11 +25,11 @@ def main():
             break
 
         memory.store("user", user_input)
-        
-        # Simulate a response (MCP will be smarter later)
-        response = f"You said: {user_input}"
-        memory.store("mcp", response)
 
+        intent = interpret_intent(user_input)
+        response = simulate_tool_response(intent, user_input)
+
+        memory.store("mcp", response)
         print(f"MCP: {response}")
 
     print("\nConversation log:")
