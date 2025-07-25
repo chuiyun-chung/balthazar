@@ -6,9 +6,13 @@ class Memory:
         self.log.append({"speaker": speaker, "text": text})
 
     def last_user_message(self):
+        # Skip the most recent user message (i.e. the one currently being processed)
+        count = 0
         for entry in reversed(self.log):
             if entry["speaker"] == "user":
-                return entry["text"]
+                count += 1
+                if count == 2:
+                    return entry["text"]
         return None
 
     def last_mcp_message(self):
