@@ -2,17 +2,17 @@ from src.memory import Memory
 from src.tools import simulate_tool_response
 
 def interpret_intent(user_input):
-    user_input = user_input.lower()
+    text = user_input.lower().strip()
 
-    if "hello" in user_input or "hi" in user_input:
+    if text in ["hi", "hello", "hey"]:
         return "greeting"
-    elif "help" in user_input:
+    elif "help" in text:
         return "help"
-    elif user_input.startswith("search"):
+    elif text.startswith("search "):
         return "search"
-    elif user_input.startswith("calculate"):
+    elif text.startswith("calculate "):
         return "calculate"
-    elif "repeat" in user_input or "what did i say" in user_input:
+    elif "repeat" in text or "what did i say" in text or "what did i just say" in text:
         return "repeat"
     else:
         return "unknown"
