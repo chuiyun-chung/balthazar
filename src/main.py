@@ -12,6 +12,8 @@ def interpret_intent(user_input):
         return "search"
     elif user_input.startswith("calculate"):
         return "calculate"
+    elif "repeat" in user_input or "what did i say" in user_input:
+        return "repeat"
     else:
         return "unknown"
 
@@ -27,7 +29,7 @@ def main():
         memory.store("user", user_input)
 
         intent = interpret_intent(user_input)
-        response = simulate_tool_response(intent, user_input)
+        response = simulate_tool_response(intent, user_input, memory)
 
         memory.store("mcp", response)
         print(f"MCP: {response}")
